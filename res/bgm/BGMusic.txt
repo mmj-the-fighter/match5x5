@@ -1,0 +1,11 @@
+Background music( aguado-op03n03.mid ) is taken from: https://www.mutopiaproject.org/cgibin/make-table.cgi?Instrument=Guitar
+Petites Pièces for Guitar, No. 3	by D. Aguado (1784–1849)
+Creative Commons Attribution-ShareAlike 4.0
+MoreInfo:https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=2065
+
+Converted to wav using fluidsynth using a soundfont
+https://www.fluidsynth.org/
+
+the soundfont used is: GeneralUser-GS.sf2
+https://schristiancollins.com/generaluser.php
+license of this font is attached as a separate file.

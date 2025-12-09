@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 200 200" role="img" aria-label="Blue square tile with five white dots">
+  <title>Yellow 5</title>
+
+  <!-- defs: subtle shadow for dots -->
+  <defs>
+    <filter id="dotShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feOffset dx="0" dy="1" result="off"/>
+      <feGaussianBlur in="off" stdDeviation="1.2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- tile background with rounded corners -->
+  <rect x="4" y="4" width="192" height="192" rx="18" ry="18" fill="#57F527" stroke="#0f4a86" stroke-width="4"/>
+
+  <!-- five pips in a domino-5 layout -->
+  <!-- corner offsets -->
+  <!-- top-left -->
+  <circle cx="58" cy="58" r="12" fill="#ffffff" filter="url(#dotShadow)"/>
+  <!-- top-right -->
+  <circle cx="142" cy="58" r="12" fill="#ffffff" filter="url(#dotShadow)"/>
+  <!-- bottom-left -->
+  <circle cx="58" cy="142" r="12" fill="#ffffff" filter="url(#dotShadow)"/>
+  <!-- bottom-right -->
+  <circle cx="142" cy="142" r="12" fill="#ffffff" filter="url(#dotShadow)"/>
+  <!-- center -->
+  <circle cx="100" cy="100" r="12" fill="#ffffff" filter="url(#dotShadow)"/>
+</svg>
