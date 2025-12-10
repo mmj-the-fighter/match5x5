@@ -1,5 +1,6 @@
 # cmake build directory name
 build_root/
+build/
 
 # Prerequisites
 *.d

@@ -22,7 +22,7 @@ SOFTWARE.
 
 
 ------------------------------------------------------------------------------- 
-Exception Notice:
+Exceptions Notice:
 
 The file "match_game/sound.h" was created with ChatGPT by OpenAI. 
 This license does not apply to that file. That file may be 
@@ -56,4 +56,14 @@ subject to different terms as determined by OpenAI's policies and usage
 guidelines. 
 	
 std::string GetTimeBasedScreenShotFileName()
+
+The implemenations of the following functions 
+at "match_game/game.cpp" were created with ChatGPT by OpenAI. 
+This license does not apply to those functions. They may be 
+subject to different terms as determined by OpenAI's policies and usage 
+guidelines. 
+	
+void Game::MakeDefaultSettings()
+bool Game::SaveSettings()
+void Game::LoadOrInitializeSettings()
 ------------------------------------------------------------------------------- 
