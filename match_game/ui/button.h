@@ -7,6 +7,7 @@
 
 #include "../spinach/core/spn_canvas.h"
 #include "../spinach/core/spn_image.h"
+#include "ui_scheme.h"
 
 enum {
 	BTN_PRESS,
@@ -68,28 +69,28 @@ enum {
 			return false;
 		}
 		void Display(spn::Canvas* canvas){
-			canvas->SaveColors();
+
 			switch (state)
 			{
 			case BTN_PRESS:
-				canvas->SetPrimaryColor(128, 128, 128);
+				canvas->SetPrimaryColor(BUTTON_PRESS_R, BUTTON_PRESS_G, BUTTON_PRESS_B);
 				canvas->DrawRectangularRegion(x, y, x + w, y + h);
 				canvas->DrawFilledRectangularRegion(x + 2, y + 2, x + w - 2, y + h - 2);
-				canvas->SetPrimaryColor(0, 0, 0);
+				canvas->SetPrimaryColor(TEXTCOLOR_R, TEXTCOLOR_G, TEXTCOLOR_B);
 				canvas->DrawCString(text.c_str(), x + 12, y + 1);
 				break;
 			case BTN_HOVER:
-				canvas->SetPrimaryColor(128, 0, 0);
+				canvas->SetPrimaryColor(BUTTON_HOVER_R, BUTTON_HOVER_G, BUTTON_HOVER_B);
 				canvas->DrawRectangularRegion(x, y, x + w, y + h);
 				canvas->DrawFilledRectangularRegion(x + 2, y + 2, x + w - 2, y + h - 2);
-				canvas->SetPrimaryColor(255, 255, 255);
+				canvas->SetPrimaryColor(TEXTCOLOR_R, TEXTCOLOR_G, TEXTCOLOR_B);
 				canvas->DrawCString(text.c_str(), x + 8, y + 2);
 				break;
 			case BTN_RELEASE:
-				canvas->SetPrimaryColor(0, 0, 128);
+				canvas->SetPrimaryColor(BUTTON_RELEASE_R, BUTTON_RELEASE_G, BUTTON_RELEASE_B);
 				canvas->DrawRectangularRegion(x, y, x + w, y + h);
 				canvas->DrawFilledRectangularRegion(x + 2, y + 2, x + w - 2, y + h - 2);
-				canvas->SetPrimaryColor(255, 255, 255);
+				canvas->SetPrimaryColor(TEXTCOLOR_R, TEXTCOLOR_G, TEXTCOLOR_B);
 				canvas->DrawCString(text.c_str(), x + 8, y + 2);
 				break;
 			}

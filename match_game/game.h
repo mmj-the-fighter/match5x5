@@ -9,9 +9,11 @@
 #include "../spinach/core/spn_image.h"
 #include "sprite.h"
 #include "common.h"
-#include "checkbox.h"
-#include "button.h"
-#include "dropdown.h"
+#include "ui/label.h"
+#include "ui/checkbox.h"
+#include "ui/button.h"
+#include "ui/dropdown.h"
+
 struct Settings {
 	bool audioOn;     // true = audio enabled
 	int algorithm;    // algorithm number
@@ -27,6 +29,12 @@ public:
 	void OnCheckBoxChanged(bool isChecked);
 private:
 	void Init();
+	void InitUi();
+	void InitAudio();
+	void DrawUi(spn::Canvas* canvas);
+	void UpdateUiOnLmbDown(int mx, int my);
+	void UpdateUiOnLmbUp(int mx, int my);
+	void UpdateUiOnMouseMove(int mx, int my);
 	void Destroy();
 	Vec2 WorldToBoardCoords(int x, int y);
 	Vec2 BoardToWorldCoords(int x, int y);
@@ -47,7 +55,6 @@ private:
 	std::vector<Tile> level;
 	std::vector<Tile> levelCopy;
 	bool mouseInvolved = false;
-	std::string scoreText;
 	int score = 0;
 	bool isGameOver = false;
 	bool isLevelUp = false;
@@ -57,10 +64,12 @@ private:
 	std::vector<Tile> genTiles;
 	spn::Image* bgImage;
 	Sprite spr;
-	Checkbox checkbox;
-	Button button;
-	Button button2;
-	Dropdown dropdown;
+	Label scoreLabel;
+	Checkbox audioCtrlCb;
+	Label audioCtrlLbl;
+	Button nextLevelBtn;
+	Button restartLevelBtn;
+	Dropdown algDropdown;
 	int levelGenMethod = 0;
 	std::string settingsPath = "settings.txt";
 	Settings settings;

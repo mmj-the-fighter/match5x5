@@ -6,6 +6,7 @@
 
 #include "../spinach/core/spn_canvas.h"
 #include "../spinach/core/spn_image.h"
+#include "ui_scheme.h"
 
 	class Checkbox
 	{
@@ -34,12 +35,12 @@
 			return false;
 		}
 		void Display(spn::Canvas* canvas){
-			//canvas->SaveColors();
+			canvas->SetPrimaryColor(CHECKBOX_R, CHECKBOX_G, CHECKBOX_B);
 			canvas->DrawRectangularRegion(x, y, x+sqSize, y+sqSize);
 			if(isChecked) {
+				canvas->SetPrimaryColor(CHECKBOX_FILL_R, CHECKBOX_FILL_G, CHECKBOX_FILL_B);
 				canvas->DrawFilledRectangularRegion(x+2, y+2, x+sqSize-2, y+sqSize-2);
 			}
-			//canvas->RestoreColors();
 		}
 	private:
 		bool IsPointInsideCb(int mx, int my) {

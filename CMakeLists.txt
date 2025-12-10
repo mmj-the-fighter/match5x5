@@ -67,6 +67,7 @@ file(GLOB_RECURSE MATCH_GAME_CPP_SRC CONFIGURE_DEPENDS
 # Collect headers 
 file(GLOB_RECURSE MATCH_GAME_CPP_H CONFIGURE_DEPENDS
 	match_game/*.[h|hpp]
+	match_game/ui/*.[h|hpp]
 )
 
 

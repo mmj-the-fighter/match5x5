@@ -7,40 +7,11 @@
 #include "level_generator.h"
 
 Game::Game() {
-	Init(); 
 	LoadOrInitializeSettings();
-
-	SetLevelGenMethod(settings.algorithm);
-	//std::cout << "Audio " << settings.audioOn << "\n";
-	if (settings.audioOn) {
-		EnableAudio();
-		checkbox.SetChecked(true);
-		initiallySoundWasOff = false;
-		PlaySoundLooped("../res/bgm/aguado-op03n03.wav");
-	}
-	else {
-		DisableAudio();
-		initiallySoundWasOff = true;
-		checkbox.SetChecked(false);
-	}
+	Init(); 
+	InitUi();
+	InitAudio();
 	
-	checkbox.SetCallback(std::bind(&Game::OnCheckBoxChanged,
-		this,
-		std::placeholders::_1));
-	
-
-	button.SetCallback([=]() {GenerateNextLevl();});
-	button2.SetCallback([=]() {RestartLevel(); });
-	button.SetCString("Next Level");
-	button2.SetCString("Restart");
-	dropdown.AddOption("Algorithm 0");
-	dropdown.AddOption("Algorithm 1");
-	dropdown.AddOption("Algorithm 2");
-	dropdown.SetOption(settings.algorithm);
-	dropdown.SetCallback([=](int selectedIndex) {
-		settings.algorithm = selectedIndex;
-		SetLevelGenMethod(selectedIndex);
-	});
 }
 Game::~Game() {
 	if (initialSettings.algorithm != settings.algorithm
@@ -52,6 +23,20 @@ Game::~Game() {
 	StopAllSounds();
 	ShutdownSoundEngine();
 	Destroy();
+}
+
+void Game::InitAudio() {
+	if (settings.audioOn) {
+		EnableAudio();
+		audioCtrlCb.SetChecked(true);
+		initiallySoundWasOff = false;
+		PlaySoundLooped("../res/bgm/aguado-op03n03.wav");
+	}
+	else {
+		DisableAudio();
+		initiallySoundWasOff = true;
+		audioCtrlCb.SetChecked(false);
+	}
 }
 
 void Game::OnCheckBoxChanged(bool isChecked) {
@@ -75,10 +60,10 @@ void Game::OnCheckBoxChanged(bool isChecked) {
 
 void Game::UpdateAndRender(spn::Canvas* canvas) {
 	static int waitFrames = 45;
-
+	canvas->SaveColors();
 	if (!isLevelUp && IsLevelCleared()) {
 		++score;
-		scoreText = "Levels Won " + std::to_string(score);
+		scoreLabel.SetString("Levels Won " + std::to_string(score));
 		isLevelUp = true;
 		PlaySoundOnce("../res/sfx/levelUp.wav");
 	}
@@ -86,12 +71,10 @@ void Game::UpdateAndRender(spn::Canvas* canvas) {
 	canvas->Clear();
 
 	if (isLevelUp) {
-		canvas->SaveColors();
-		canvas->SetPrimaryColor(255, 255, 255);
+		canvas->SetPrimaryColor(TEXTCOLOR_R, TEXTCOLOR_G, TEXTCOLOR_B);
 		canvas->DrawCString("Level Up", cellW * 6, 100);
 		canvas->DrawCString("Loading Next Level ...", cellW * 6, 120);
-		canvas->DrawString(scoreText, cellW * 6, 140);
-		canvas->RestoreColors();
+		scoreLabel.Display(canvas);
 		--waitFrames;
 		if (waitFrames <= 0) {
 			waitFrames = 45;
@@ -131,34 +114,73 @@ void Game::UpdateAndRender(spn::Canvas* canvas) {
 	}
 
 	if (isGameOver) {
-		canvas->SaveColors();
-		canvas->SetPrimaryColor(255, 255, 255);
+		canvas->SetPrimaryColor(TEXTCOLOR_R, TEXTCOLOR_G, TEXTCOLOR_B);
 		canvas->DrawCString("GameOver!", cellW * 6, 100);
 		canvas->DrawCString("Click Restart / Next Level", cellW * 6, 120);
-		canvas->RestoreColors();
 	}
-	canvas->SaveColors();
-	canvas->SetPrimaryColor(255, 255, 255);
-	canvas->DrawString(scoreText, cellW * 6, 140);
-	canvas->RestoreColors();
-	checkbox.SetPosition(cellW * 6, 170+2);
-	checkbox.Display(canvas);
-	canvas->SaveColors();
-	canvas->SetPrimaryColor(255, 255, 255);
-	canvas->DrawCString("Audio On / Off", cellW * 6 + 19, 170);
+
+	DrawUi(canvas);
 	canvas->RestoreColors();
 
-	button.SetPosition(cellW * 6, 192 + 2);
-	button.SetSize(cellW*2, 24);
-	button.Display(canvas);
+}
+void Game::InitUi() {
+	scoreLabel.SetString("Levels Won " + std::to_string(score));
+	scoreLabel.SetPosition(cellW * 6, 140);
+	//set position, size and callbacks
+	audioCtrlLbl.SetCString("Audio On / Off");
+	audioCtrlLbl.SetPosition(cellW * 6 + 19, 170);
+	audioCtrlCb.SetPosition(cellW * 6, 170 + 2);
+	audioCtrlCb.SetCallback(std::bind(&Game::OnCheckBoxChanged,
+		this,
+		std::placeholders::_1));
+	
+	nextLevelBtn.SetCString("Next Level");
+	nextLevelBtn.SetPosition(cellW * 6, 192 + 2);
+	nextLevelBtn.SetSize(cellW * 2, 24);
+	nextLevelBtn.SetCallback([=]() {GenerateNextLevl(); });
+	
 
-	button2.SetPosition(cellW * 6, 250+2);
-	button2.SetSize(cellW * 2, 24);
-	button2.Display(canvas);
+	restartLevelBtn.SetCString("Restart");
+	restartLevelBtn.SetPosition(cellW * 6, 250 + 2);
+	restartLevelBtn.SetSize(cellW * 2, 24);
+	restartLevelBtn.SetCallback([=]() {RestartLevel(); });
 
-	dropdown.SetPosition(cellW * 6, 224);
-	dropdown.SetSize(cellW * 2, 24);
-	dropdown.Display(canvas);
+	algDropdown.AddOption("Algorithm 0");
+	algDropdown.AddOption("Algorithm 1");
+	algDropdown.AddOption("Algorithm 2");
+	algDropdown.SetPosition(cellW * 6, 224);
+	algDropdown.SetSize(cellW * 2, 24);
+	algDropdown.SetOption(settings.algorithm);
+	algDropdown.SetCallback([=](int selectedIndex) {
+		settings.algorithm = selectedIndex;
+		SetLevelGenMethod(selectedIndex);
+		});
+
+}
+void Game::DrawUi(spn::Canvas* canvas) {
+	audioCtrlCb.Display(canvas);
+	nextLevelBtn.Display(canvas);
+	restartLevelBtn.Display(canvas);
+	algDropdown.Display(canvas);
+	audioCtrlLbl.Display(canvas);
+	scoreLabel.Display(canvas);
+}
+void Game::UpdateUiOnLmbDown(int mx, int my) {
+	nextLevelBtn.OnLmbDown(mx, my);
+	restartLevelBtn.OnLmbDown(mx, my);
+}
+
+void Game::UpdateUiOnLmbUp(int mx, int my) {
+	audioCtrlCb.OnLmbUp(mx, my);
+	nextLevelBtn.OnLmbUp(mx, my);
+	restartLevelBtn.OnLmbUp(mx, my);
+	algDropdown.OnLmbUp(mx, my);
+}
+
+void Game::UpdateUiOnMouseMove(int mx, int my) {
+	nextLevelBtn.OnMouseOver(mx, my);
+	restartLevelBtn.OnMouseOver(mx, my);
+	algDropdown.OnMouseOver(mx, my);
 
 }
 
@@ -184,8 +206,8 @@ void Game::HandleInput(const SDL_Event* e)
 			mouseInvolved = true;
 			x = e->button.x;
 			y = e->button.y;
-			button.OnLmbDown(x, y);
-			button2.OnLmbDown(x, y);
+
+			UpdateUiOnLmbDown(x, y);
 			//dropdown.OnLmbDown(x, y);
 			prvX = x;
 			prvY = y;
@@ -216,9 +238,7 @@ void Game::HandleInput(const SDL_Event* e)
 		x = e->motion.x;
 		y = e->motion.y;
 
-		button.OnMouseOver(x, y);
-		button2.OnMouseOver(x, y);
-		dropdown.OnMouseOver(x, y);
+		UpdateUiOnMouseMove(x, y);
 
 		// Correct way to check if LMB is held
 		if (!isGameOver && e->motion.state & SDL_BUTTON_LMASK && alteredTileIndex >= 0)
@@ -264,10 +284,7 @@ void Game::HandleInput(const SDL_Event* e)
 		if (e->button.button == SDL_BUTTON_LEFT) {
 			x = e->button.x;
 			y = e->button.y;
-			checkbox.OnLmbUp(x, y);
-			button.OnLmbUp(x, y);
-			button2.OnLmbUp(x, y);
-			dropdown.OnLmbUp(x, y);
+			UpdateUiOnLmbUp(x,y);
 			if (!isGameOver && alteredTileIndex >= 0)
 			{
 				spr.OnLmbUp();
@@ -290,25 +307,25 @@ void Game::HandleInput(const SDL_Event* e)
 			break;
 		case SDLK_M:
 		{
-			bool state = !checkbox.GetChecked();
-			checkbox.SetChecked(state);
+			bool state = !audioCtrlCb.GetChecked();
+			audioCtrlCb.SetChecked(state);
 			OnCheckBoxChanged(state);
 		}
 		break;
 		case SDLK_KP_0:
 		case SDLK_0://0 is pressed
 			SetLevelGenMethod(0);
-			dropdown.SetOption(0);
+			algDropdown.SetOption(0);
 			break;
 		case SDLK_KP_1:
 		case SDLK_1://1 is pressed
 			SetLevelGenMethod(1);
-			dropdown.SetOption(1);
+			algDropdown.SetOption(1);
 			break;
 		case SDLK_KP_2:
 		case SDLK_2://2 is pressed 
 			SetLevelGenMethod(2);
-			dropdown.SetOption(2);
+			algDropdown.SetOption(2);
 			break;
 		case SDLK_SPACE:
 			GenerateNextLevl();
@@ -356,7 +373,7 @@ void Game::GenerateNextLevl() {
 	isLevelUp = false;
 	isGameOver = false;
 	score = 0;
-	scoreText = "Levels Won " + std::to_string(score);
+	scoreLabel.SetString("Levels Won " + std::to_string(score));
 	LoadLevel(level,levelCopy, genTiles, levelGenMethod);
 }
 
@@ -417,6 +434,7 @@ bool Game::CanLevelBeCleared() {
 
 void Game::Init()
 {
+	SetLevelGenMethod(settings.algorithm);
 	for (int i = 0; i < MAXCOLORS; i++) {
 		for (int j = 0; j < MAXNUMBERS; j++) {
 			Tile tile;
@@ -447,7 +465,6 @@ void Game::Init()
 	spr.image = NULL;
 	spr.SetPosition(-10, -10);
 	score = 0;
-	scoreText = "Levels Won " + std::to_string(score);
 }
 
 void Game::SetLevelGenMethod(int algorithmType) {
@@ -467,7 +484,6 @@ void Game::Destroy()
 		delete tileImages[i];
 	}
 	delete bgImage;
-
 }
 
 //This function is generated by ChatGPT
