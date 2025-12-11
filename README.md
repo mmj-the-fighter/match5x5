@@ -4,9 +4,8 @@ This repository contains the core logic and design specification for a tile-matc
 
 ---
 ## Build / Play the Game
-````md
 ### How to Run (Visual Studio on Windows)
-
+````
 1. Navigate to the game’s source code folder containing the `CMakeLists.txt` file.  
 2. Open a command prompt in that folder and run:
    ```bash
@@ -43,11 +42,10 @@ This repository contains the core logic and design specification for a tile-matc
    ./match_game
    ```
 
-```
-```
+
 ### Play in itch.io
 
-If you can't generate exe from source code, you can play the game on itch.io.
+If you can't generate exe from source code, you can download an old version from itch.io
 
 [https://mmjthefighter.itch.io/match5x5](https://mmjthefighter.itch.io/match5x5)
 
