@@ -1,6 +1,7 @@
 # Match 5x5 (A tile game for small kids)
 
 This repository contains the core logic and design specification for a tile-matching puzzle game played on a 5×5 grid. This document describes the gameplay mechanics, matching rules, level-generation logic, and the mathematical bounds on possible level configurations.
+
 ---
 ## Watch Demos
  - [Game Play](https://www.youtube.com/watch?v=VJYC5sbz1WU)
