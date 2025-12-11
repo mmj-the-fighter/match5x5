@@ -3,7 +3,49 @@
 This repository contains the core logic and design specification for a tile-matching puzzle game played on a 5×5 grid. This document describes the gameplay mechanics, matching rules, level-generation logic, and the mathematical bounds on possible level configurations.
 
 ---
-## Play the Game
+## Build / Play the Game
+````md
+### How to Run (Visual Studio on Windows)
+
+1. Navigate to the game’s source code folder containing the `CMakeLists.txt` file.  
+2. Open a command prompt in that folder and run:
+   ```bash
+   mkdir build
+   cd build
+   cmake ../
+````
+
+3. Open the generated Visual Studio project.
+4. Build all targets.
+5. Copy `SDL3.dll` from:
+
+   ```
+   build/_deps/sdl3-build/Debug/
+   ```
+
+   into:
+
+   ```
+   build/
+   ```
+6. Run the `match_game` executable.
+
+### How to Run (g++ on Linux / macOS)
+
+1. Navigate to the game’s source code folder containing the `CMakeLists.txt` file.
+2. Run the following:
+
+   ```bash
+   mkdir build
+   cd build
+   cmake ../
+   make
+   ./match_game
+   ```
+
+```
+```
+### Play in itch.io
 
 If you can't generate exe from source code, you can play the game on itch.io.
 
