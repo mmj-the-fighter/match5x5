@@ -134,7 +134,7 @@ void Game::InitUi() {
 	scoreLabel.SetString("Levels Won " + std::to_string(score));
 	scoreLabel.SetPosition(cellW * 6, 140);
 	//set position, size and callbacks
-	audioCtrlLbl.SetCString("Audio On / Off");
+	audioCtrlLbl.SetCString("Enable Audio");
 	audioCtrlLbl.SetPosition(cellW * 6 + 19, 170);
 	audioCtrlCb.SetPosition(cellW * 6, 170 + 2);
 	audioCtrlCb.SetCallback(std::bind(&Game::OnCheckBoxChanged,
