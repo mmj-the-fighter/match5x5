@@ -193,8 +193,8 @@ void Game::UpdateUiOnMouseMove(int mx, int my) {
 
 void Game::HandleInput(const SDL_Event* e)
 {
-	Vec2 b;
-	Vec2 w;
+	RowCol bc;
+	Vec2 wc;
 	int id;
 	Tile t;
 	float x, y, dx, dy;
@@ -218,11 +218,11 @@ void Game::HandleInput(const SDL_Event* e)
 			//dropdown.OnLmbDown(x, y);
 			prvX = x;
 			prvY = y;
-			b = WorldToBoardCoords(x, y);
+			bc = WorldToBoardCoords(x, y);
 			eliminated = false;
-			if (b.x >= 0 && b.x <= 4 && b.y >= 0 && b.y <= 4) {
-				w = BoardToWorldCoords(b.x, b.y);
-				id = b.y * 5 + b.x;
+			if (bc.c >= 0 && bc.c < MAXCOLUMNS && bc.r >= 0 && bc.r < MAXROWS) {
+				wc = BoardToWorldCoords(bc.c, bc.r);
+				id = bc.r * MAXCOLUMNS + bc.c;
 				if (false == level[id].isCleared) {
 					alteredTileIndex = id;
 					level[id].isMoving = true;
@@ -231,7 +231,7 @@ void Game::HandleInput(const SDL_Event* e)
 					index = color * MAXCOLORS + number;
 					spn::Image* img = tileImages[index];
 					spr.Set(img);
-					spr.SetPosition(w.x, w.y);
+					spr.SetPosition(wc.x, wc.y);
 					spr.OnLmbDown(x, y);
 				}
 				else {
@@ -253,10 +253,10 @@ void Game::HandleInput(const SDL_Event* e)
 			x = e->motion.x;
 			y = e->motion.y;
 			//button.OnMouseOver(x, y);
-			b = WorldToBoardCoords(x, y);
-			if (b.x >= 0 && b.x <= 4 && b.y >= 0 && b.y <= 4) {
-				//w = BoardToWorldCoords(b.x, b.y);
-				id = b.y * 5 + b.x;
+			bc = WorldToBoardCoords(x, y);
+			if (bc.c >= 0 && bc.c < MAXCOLUMNS && bc.r >= 0 && bc.r < MAXROWS) {
+				//w = BoardToWorldCoords(bc.c, bc.r);
+				id = bc.r * MAXCOLUMNS + bc.c;
 				if (alteredTileIndex != id && level[id].isCleared == false) {
 					c1 = level[alteredTileIndex].color;
 					n1 = level[alteredTileIndex].number;
@@ -353,11 +353,11 @@ void Game::RestartLevel() {
 	isGameOver = false;
 } 
 
-Vec2 Game::WorldToBoardCoords(int x, int y) {
-	Vec2 b;
-	b.x = (x - startX) / cellW;
-	b.y = (y - startY) / cellH;
-	return b;
+RowCol Game::WorldToBoardCoords(int x, int y) {
+	RowCol bc;
+	bc.c = (x - startX) / cellW;
+	bc.r = (y - startY) / cellH;
+	return bc;
 }
 
 Vec2 Game::BoardToWorldCoords(int x, int y) {

@@ -36,7 +36,7 @@ private:
 	void UpdateUiOnLmbUp(int mx, int my);
 	void UpdateUiOnMouseMove(int mx, int my);
 	void Destroy();
-	Vec2 WorldToBoardCoords(int x, int y);
+	RowCol WorldToBoardCoords(int x, int y);
 	Vec2 BoardToWorldCoords(int x, int y);
 	bool IsLevelCleared();
 	bool CanLevelBeCleared();

@@ -19,6 +19,11 @@ struct Vec2 {
 	int y;
 };
 
+struct RowCol {
+	int r;
+	int c;
+};
+
 struct Tile {
 	unsigned char number;
 	unsigned char color;
