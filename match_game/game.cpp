@@ -180,8 +180,9 @@ void Game::UpdateUiOnLmbDown(int mx, int my) {
 void Game::UpdateUiOnLmbUp(int mx, int my) {
 	audioCtrlCb.OnLmbUp(mx, my);
 	nextLevelBtn.OnLmbUp(mx, my);
-	restartLevelBtn.OnLmbUp(mx, my);
-	algDropdown.OnLmbUp(mx, my);
+	if (!algDropdown.OnLmbUp(mx, my)) { //FIXME:
+		restartLevelBtn.OnLmbUp(mx, my);
+	}
 }
 
 void Game::UpdateUiOnMouseMove(int mx, int my) {
