@@ -102,24 +102,41 @@ struct DRect {
 			{
 				case DD_EXPANDED:
 				{
-					canvas->SetPrimaryColor(BUTTON_RELEASE_R, BUTTON_RELEASE_G, BUTTON_RELEASE_B);
+					canvas->SetPrimaryColorUint(
+						UiScheme::GetInstance().buttonReleaseColor
+					);
 					canvas->DrawRectangularRegion(x, y, x + w, y + ch);
 					canvas->DrawFilledRectangularRegion(x + 2, y + 2, x + w - 2, y + ch - 2);
-					canvas->SetPrimaryColor(TEXTCOLOR_R, TEXTCOLOR_G, TEXTCOLOR_B);
+					canvas->SetPrimaryColorUint(
+						UiScheme::GetInstance()
+						.textColor
+					);
 					canvas->DrawString(options[selectedIndex], x + 12, y + 1);
 					int i=1;
 					for(const auto& opt:options){
 						if(i-1== hoveredIndex){
-							canvas->SetPrimaryColor(BUTTON_HOVER_R, BUTTON_HOVER_G, BUTTON_HOVER_B);
+							canvas->SetPrimaryColorUint(
+								UiScheme::GetInstance()
+								.buttonHoverColor
+							);
 							canvas->DrawRectangularRegion(x, y+i*ch, x + w, y + (i+1)*ch);
 							canvas->DrawFilledRectangularRegion(x, y +i*ch, x + w, y + (i+1)*ch);
-							canvas->SetPrimaryColor(TEXTCOLOR_R, TEXTCOLOR_G, TEXTCOLOR_B);
+							canvas->SetPrimaryColorUint(
+								UiScheme::GetInstance()
+								.textColor
+							);
 							canvas->DrawString(options[hoveredIndex], x + 12, y + (i * ch) + 1);
 						}else{
-							canvas->SetPrimaryColor(BUTTON_RELEASE_R, BUTTON_RELEASE_G, BUTTON_RELEASE_B);
+							canvas->SetPrimaryColorUint(
+								UiScheme::GetInstance()
+								.buttonReleaseColor
+							);
 							canvas->DrawRectangularRegion(x, y+i*ch, x + w, y + (i+1)*ch);
 							canvas->DrawFilledRectangularRegion(x, y +i*ch, x + w, y + (i+1)*ch);
-							canvas->SetPrimaryColor(TEXTCOLOR_R, TEXTCOLOR_G, TEXTCOLOR_B);
+							canvas->SetPrimaryColorUint(
+								UiScheme::GetInstance()
+								.textColor
+							);
 							canvas->DrawString(options[i-1], x + 12, y + (i * ch) + 1);
 						}
 						++i;
@@ -127,15 +144,24 @@ struct DRect {
 				}
 				break;
 				case DD_NORMALSIZE:
-					canvas->SetPrimaryColor(BUTTON_RELEASE_R, BUTTON_RELEASE_G, BUTTON_RELEASE_B);
+					canvas->SetPrimaryColorUint(
+						UiScheme::GetInstance()
+						.buttonReleaseColor
+					);
 					canvas->DrawRectangularRegion(x, y, x + w, y + ch);
 					canvas->DrawFilledRectangularRegion(x + 2, y + 2, x + w - 2, y + ch - 2);
-					canvas->SetPrimaryColor(TEXTCOLOR_R, TEXTCOLOR_G, TEXTCOLOR_B);
+					canvas->SetPrimaryColorUint(
+						UiScheme::GetInstance()
+						.textColor
+					);
 					canvas->DrawCString(options[selectedIndex].c_str(), x + 12, y + 1);
 					break;
 			}
 			//nook
-			canvas->SetPrimaryColor(TEXTCOLOR_R, TEXTCOLOR_G, TEXTCOLOR_B);
+			canvas->SetPrimaryColorUint(
+				UiScheme::GetInstance()
+				.textColor
+			);
 			canvas->DrawLine(x + w - ch+2, y+ch/3, x + w - ch / 2, y + ch/2);
 			canvas->DrawLine(x + w - ch / 2, y + ch / 2, x + w-2, y+ch/3);
 		}

@@ -71,7 +71,10 @@ void Game::UpdateAndRender(spn::Canvas* canvas) {
 	canvas->Clear();
 
 	if (isLevelUp) {
-		canvas->SetPrimaryColor(TEXTCOLOR_R, TEXTCOLOR_G, TEXTCOLOR_B);
+		canvas->SetPrimaryColorUint(
+			UiScheme::GetInstance()
+			.textColor
+		);
 		canvas->DrawCString("Level Up", cellW * 6, 100);
 		canvas->DrawCString("Loading Next Level ...", cellW * 6, 120);
 		scoreLabel.Display(canvas);
@@ -114,7 +117,10 @@ void Game::UpdateAndRender(spn::Canvas* canvas) {
 	}
 
 	if (isGameOver) {
-		canvas->SetPrimaryColor(TEXTCOLOR_R, TEXTCOLOR_G, TEXTCOLOR_B);
+		canvas->SetPrimaryColorUint(
+			UiScheme::GetInstance()
+			.textColor
+		);
 		canvas->DrawCString("GameOver!", cellW * 6, 100);
 		canvas->DrawCString("Click Restart / Next Level", cellW * 6, 120);
 	}
@@ -124,6 +130,7 @@ void Game::UpdateAndRender(spn::Canvas* canvas) {
 
 }
 void Game::InitUi() {
+	UiScheme::GetInstance().LoadSchemeFile("../res/ui.skin");
 	scoreLabel.SetString("Levels Won " + std::to_string(score));
 	scoreLabel.SetPosition(cellW * 6, 140);
 	//set position, size and callbacks

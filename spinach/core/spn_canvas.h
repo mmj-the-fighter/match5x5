@@ -72,11 +72,22 @@ namespace spn
 			*dstLoc++ = primaryColorR;
 			*dstLoc = 255;
 		}
+		inline void SetPrimaryColorUint(unsigned int color) {
+			primaryColorR = (unsigned char)((color >> 16) & 0xFF);
+			primaryColorG = (unsigned char)((color >> 8) & 0xFF);
+			primaryColorB = (unsigned char)(color & 0xFF);
+		}
 
 		inline void SetPrimaryColor(int r, int g, int b) {
 			primaryColorR = r;
 			primaryColorG = g;
 			primaryColorB = b;
+		}
+
+		inline void SetClearColorUint(unsigned int color) {
+			clearColorR = (unsigned char)((color >> 16) & 0xFF);
+			clearColorG = (unsigned char)((color >> 8) & 0xFF);
+			clearColorB = (unsigned char)(color & 0xFF);
 		}
 
 		inline void SetClearColor(int r, int g, int b) {

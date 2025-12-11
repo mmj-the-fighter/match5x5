@@ -73,24 +73,30 @@ enum {
 			switch (state)
 			{
 			case BTN_PRESS:
-				canvas->SetPrimaryColor(BUTTON_PRESS_R, BUTTON_PRESS_G, BUTTON_PRESS_B);
+				canvas->SetPrimaryColorUint(
+					UiScheme::GetInstance().buttonPressColor);
 				canvas->DrawRectangularRegion(x, y, x + w, y + h);
 				canvas->DrawFilledRectangularRegion(x + 2, y + 2, x + w - 2, y + h - 2);
-				canvas->SetPrimaryColor(TEXTCOLOR_R, TEXTCOLOR_G, TEXTCOLOR_B);
+				canvas->SetPrimaryColorUint(
+					UiScheme::GetInstance().textColor);
 				canvas->DrawCString(text.c_str(), x + 12, y + 1);
 				break;
 			case BTN_HOVER:
-				canvas->SetPrimaryColor(BUTTON_HOVER_R, BUTTON_HOVER_G, BUTTON_HOVER_B);
+				canvas->SetPrimaryColorUint(
+					UiScheme::GetInstance().buttonHoverColor);
 				canvas->DrawRectangularRegion(x, y, x + w, y + h);
 				canvas->DrawFilledRectangularRegion(x + 2, y + 2, x + w - 2, y + h - 2);
-				canvas->SetPrimaryColor(TEXTCOLOR_R, TEXTCOLOR_G, TEXTCOLOR_B);
+				canvas->SetPrimaryColorUint(
+					UiScheme::GetInstance().textColor);
 				canvas->DrawCString(text.c_str(), x + 8, y + 2);
 				break;
 			case BTN_RELEASE:
-				canvas->SetPrimaryColor(BUTTON_RELEASE_R, BUTTON_RELEASE_G, BUTTON_RELEASE_B);
+				canvas->SetPrimaryColorUint(
+					UiScheme::GetInstance().buttonReleaseColor);
 				canvas->DrawRectangularRegion(x, y, x + w, y + h);
 				canvas->DrawFilledRectangularRegion(x + 2, y + 2, x + w - 2, y + h - 2);
-				canvas->SetPrimaryColor(TEXTCOLOR_R, TEXTCOLOR_G, TEXTCOLOR_B);
+				canvas->SetPrimaryColorUint(
+					UiScheme::GetInstance().textColor);
 				canvas->DrawCString(text.c_str(), x + 8, y + 2);
 				break;
 			}

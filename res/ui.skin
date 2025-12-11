@@ -1,0 +1,7 @@
+checkboxSize = 14
+checkboxColor = #FFFFFF
+checkboxFillColor = #CC5500
+textColor = #00FF00
+buttonReleaseColor = #000080
+buttonHoverColor = #CC5500
+buttonPressColor = #808080

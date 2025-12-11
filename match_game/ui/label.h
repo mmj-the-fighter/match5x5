@@ -23,7 +23,10 @@ public:
 		text = s;
 	}
 	void Display(spn::Canvas* canvas){
-		canvas->SetPrimaryColor(TEXTCOLOR_R, TEXTCOLOR_G, TEXTCOLOR_B);
+		canvas->SetPrimaryColorUint(
+			UiScheme::GetInstance()
+			.textColor
+		);
 		canvas->DrawString(text, x, y);
 	}
 private:

@@ -29,6 +29,10 @@ This license does not apply to that file. That file may be
 subject to different terms as determined by OpenAI's policies and usage 
 guidelines. 
 
+The file "match_game/ui_scheme.h" was created with ChatGPT and Gemini. 
+This license does not apply to that file. That file may be 
+subject to different terms as determined by OpenAI and Google for generative AI.
+
 
 The implemenations of the following functions 
 at "spinach/core/spn_canvas.cpp" was created with ChatGPT by OpenAI. 

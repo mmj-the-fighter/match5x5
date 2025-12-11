@@ -35,15 +35,22 @@
 			return false;
 		}
 		void Display(spn::Canvas* canvas){
-			canvas->SetPrimaryColor(CHECKBOX_R, CHECKBOX_G, CHECKBOX_B);
+			canvas->SetPrimaryColorUint(
+				UiScheme::GetInstance()
+				.checkboxColor
+			);
 			canvas->DrawRectangularRegion(x, y, x+sqSize, y+sqSize);
 			if(isChecked) {
-				canvas->SetPrimaryColor(CHECKBOX_FILL_R, CHECKBOX_FILL_G, CHECKBOX_FILL_B);
+				canvas->SetPrimaryColorUint(
+					UiScheme::GetInstance()
+					.checkboxFillColor
+				);
 				canvas->DrawFilledRectangularRegion(x+2, y+2, x+sqSize-2, y+sqSize-2);
 			}
 		}
 	private:
 		bool IsPointInsideCb(int mx, int my) {
+			sqSize = UiScheme::GetInstance().checkboxSize;
 			return (mx >= x) && 
 				(mx <= x + sqSize) && 
 				(my >= y) && 
@@ -52,7 +59,7 @@
 		
 		std::function<void(bool isChecked)> onCheckboxChangedFn;
 		bool isChecked = false;
-		int sqSize = 14;
+		unsigned int sqSize = 14;
 		int x = 0;
 		int y = 0;
 	};
